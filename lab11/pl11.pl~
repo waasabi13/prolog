@@ -79,9 +79,3 @@ maxD(X,Y,M):-D is X mod 10, X1 is X div 10,D > Y,!,maxD(X1,D,M); X2 is X div 10,
 %17 sumcifr деляющихся на 3
 sumcifr3(0,0):-!.
 sumcifr3(X,M):-X1 is X div 10,sumcifr3(X1,M1),M2 is X mod 10,(0 is M2 mod 3, M is M2+M1; M is M1),!.
-%18
-sumcifr3d(X,R):-sumcifr3d(X,0,R).
-sumcifr3d(0,T,T):-!.
-sumcifr3d(X,P,R):-D is X mod 10,0 is D mod 3, P1 is (P + D),X1 is X div 10,
-    sumcifr3d(X1,P1,R),!
-    ;X2 is X div 10,sumcifr3d(X2,P,R).
