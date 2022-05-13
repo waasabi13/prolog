@@ -58,3 +58,7 @@ son(X) :- parent(X, Y), man(Y), write(Y), nl, fail.
 sister(X,Y):-woman(X),parent(Z,X),parent(Z,Y),!.
 %12 Вывести всех сестер Х
 sister(X):-parent(Y,X),parent(Y,Z),man(Y),woman(Z),write(Z),nl,fail.
+%13 Является ли Х бабушкой У
+grand_ma(X,Y):-parent(X,Z),parent(Z,Y),woman(X),write(yes),nl,!.
+%13 Всех бабушек Х
+grand_mas(X):-parent(Z,X),parent(Y,Z),woman(Y),write(Y),nl.
