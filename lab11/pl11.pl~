@@ -1,4 +1,4 @@
-man(voeneg).
+п»їman(voeneg).
 man(ratibor).
 man(boguslav).
 man(velerad).
@@ -18,7 +18,7 @@ woman(broneslava).
 woman(veselina).
 woman(zdislava).
 
-% parent(родитель, ребенок)
+% parent(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 
 parent(voeneg,ratibor).
 parent(voeneg,bratislava).
@@ -50,7 +50,11 @@ parent(duhovlad,zlatomir).
 parent(zhdana,zdislava).
 parent(zhdana,zlatomir).
 
-% 11 Является ли X сыном Y
+% 11 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ X пїЅпїЅпїЅпїЅпїЅ Y
 son(X, Y) :- parent(Y, X),man(X),!.
-% 11 Вывести всех сыновей X
+% 11 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ X
 son(X) :- parent(X, Y), man(Y), write(Y), nl, fail.
+%12 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ X пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Y
+sister(X,Y):-woman(X),parent(Z,X),parent(Z,Y),!.
+%12 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+sister(X):-parent(Y,X),parent(Y,Z),man(Y),woman(Z),write(Z),nl,fail.
