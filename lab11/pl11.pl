@@ -62,3 +62,5 @@ sister(X):-parent(Y,X),parent(Y,Z),man(Y),woman(Z),write(Z),nl,fail.
 grand_ma(X,Y):-parent(X,Z),parent(Z,Y),woman(X),write(yes),nl,!.
 %13 Всех бабушек Х
 grand_mas(X):-parent(Z,X),parent(Y,Z),woman(Y),write(Y),nl.
+%14 Являются Х дедушкой У внучкой или наоборот
+grand_pa_and_da(X,Y):- parent(X,Z),parent(Z,Y),woman(Y),man(X),write(yes),nl,fail;parent(Y,Z),parent(Z,X),woman(X),man(Y),write(yes),nl,fail.
