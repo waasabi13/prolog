@@ -54,3 +54,7 @@ parent(zhdana,zlatomir).
 son(X, Y) :- parent(Y, X),man(X),!.
 % 11 Вывести всех сыновей X
 son(X) :- parent(X, Y), man(Y), write(Y), nl, fail.
+%12 Является ли X сестрой Y
+sister(X,Y):-woman(X),parent(Z,X),parent(Z,Y),!.
+%12 Вывести всех сестер Х
+sister(X):-parent(Y,X),parent(Y,Z),man(Y),woman(Z),write(Z),nl,fail.
