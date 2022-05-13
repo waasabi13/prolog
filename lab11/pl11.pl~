@@ -64,3 +64,10 @@ grand_ma(X,Y):-parent(X,Z),parent(Z,Y),woman(X),write(yes),nl,!.
 grand_mas(X):-parent(Z,X),parent(Y,Z),woman(Y),write(Y),nl.
 %14 Являются Х дедушкой У внучкой или наоборот
 grand_pa_and_da(X,Y):- parent(X,Z),parent(Z,Y),woman(Y),man(X),write(yes),nl,fail;parent(Y,Z),parent(Z,X),woman(X),man(Y),write(yes),nl,fail.
+%15
+maxU(0,0):-!.
+maxU(X,M):-
+	X1 is X div 10,
+	maxU(X1,M1),
+	M2 is X mod 10,
+       (M2>M1, M is M2;M is M1),!.
