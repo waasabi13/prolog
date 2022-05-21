@@ -91,7 +91,7 @@ max(X,Y,X):-X>Y,!.
 max(_,Y,Y).
 
 
-task16:- read(N),readList(N,List),
+task16:- read(N),read_list(N,List),
     getMinInd(List,X),getMaxInd(List,Y),A is X+1,B is Y+1,min(A,B,C),max(A,B,D),
     take(List,-1,C,L),list_length(List,K),K1 is K+2,D1 is D-2,take(List,D1,K1,LL),take(List,X,Y,R),rev(R,R1),
     append1(L,R1,T),append1(T,LL,T1),write_list(T1),!.

@@ -96,5 +96,18 @@ task16:- read(N),read_list(N,List),
     take(List,-1,C,L),list_length(List,K),K1 is K+2,D1 is D-2,take(List,D1,K1,LL),take(List,X,Y,R),rev(R,R1),
     append1(L,R1,T),append1(T,LL,T1),write_list(T1),!.
 
+%17
+countElemBetweenAB([],A,B,Count):-Count is 0,!.
+countElemBetweenAB([H|T],A,B,Count):-
+    (
+        H<B,
+        H>A,
+        countElemBetweenAB(T,A,B,Count1),
+        Count is Count1+1;
+        countElemBetweenAB(T,A,B,Count)
+    ).
+
+task7:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
+
 
 
