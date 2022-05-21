@@ -57,14 +57,21 @@ list_length([], Length, Length):-!.
 list_length([_|T], CurLength, Length):- CurN1 is CurLength+1, list_length(T, CurN1, Length).
 
 %15
-getMaxInd([H|T],MaxInd):-getMaxInd([H|T],H,0,0,MaxInd).
-getMaxInd([],_,Answer,_,Answer):-!.
-getMaxInd([H|T],Max,_,CurInd,Answer):-CurInd1 is CurInd+1,H>Max,NewMaxInd is CurInd,NewMax is H,getMaxInd(T,NewMax,NewMaxInd,CurInd1,Answer),!.
-getMaxInd([_|T],Max,MaxInd,CurInd,Answer):-CurInd1 is CurInd+1,getMaxInd(T,Max,MaxInd,CurInd1,Answer).
+maxIndex([H|T],Max):- maxIndex([H|T],H,Max,0,Index_Max,0).
+maxIndex([],Max,Max,Index,Index_Max,Index):-!.
+maxIndex([H|T],NowMax,Max,NowIndex,Index_Max,Index):-
+    Index1 is Index+1,
+    (H >= NowMax,maxIndex(T,H,Max,Index,Index_Max,Index1);maxIndex(T,NowMax,Max,NowIndex,Index_Max,Index1)),!.
 
-task15:-write("Dlina spiska: "), read(Count),readList(Count,List),
+minIndex([H|T],Max,Index_Max):- minIndex([H|T],H,Max,0,Index_Max,0).
+minIndex([],NowMax,Max,NowIndex,Index_Max,Index):-Max is NowMax,Index_Max is NowIndex,!.
+minIndex([H|T],NowMax,Max,NowIndex,Index_Max,Index):-
+    Index1 is Index+1,
+    (NowMax>= H,minIndex(T,H,Max,Index,Index_Max,Index1);minIndex(T,NowMax,Max,NowIndex,Index_Max,Index1)),!.
+
+task15:-write("Dlina spiska: "), read(Count),read_list(Count,List),
     write("Kolvo elementov posle max: "),
-    list_length(List,Len),getMaxInd(List,IndMax),
+    list_length(List,Len),maxIndex(List,_,IndMax),
     X is Len-IndMax-1, write(X),!.
 
 %16
@@ -90,11 +97,37 @@ min(_,Y,Y).
 max(X,Y,X):-X>Y,!.
 max(_,Y,Y).
 
-
 task16:- read(N),read_list(N,List),
-    getMinInd(List,X),getMaxInd(List,Y),A is X+1,B is Y+1,min(A,B,C),max(A,B,D),
+    minIndex(List,_,X),maxIndex(List,_,Y),A is X+1,B is Y+1,min(A,B,C),max(A,B,D),
     take(List,-1,C,L),list_length(List,K),K1 is K+2,D1 is D-2,take(List,D1,K1,LL),take(List,X,Y,R),rev(R,R1),
-    append1(L,R1,T),append1(T,LL,T1),write_list(T1),!.
+    append(L,R1,T),append(T,LL,T1),write_list(T1),!.
+
+
+%17
+countElemBetweenAB([],A,B,Count):-Count is 0,!.
+countElemBetweenAB([H|T],A,B,Count):-
+    (
+        H<B,
+        H>A,
+        countElemBetweenAB(T,A,B,Count1),
+        Count is Count1+1;
+        countElemBetweenAB(T,A,B,Count)
+    ).
+
+task7:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
+%20
+ifMaxBetweenAB(List,A,B,Flag):-
+    maxIndex(List,Max,IndexMax),
+    (
+        A<Max,
+        B>Max,
+
+        Flag is 1;
+
+        Flas is 0
+    ).
+
+task10:- read(N),read_list(N,List),read(A),read(B),ifMaxBetweenAB(List,A,B,Flag),write(Flag),!.
 
 
 
