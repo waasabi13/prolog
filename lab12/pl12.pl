@@ -15,3 +15,42 @@ eulerU(A,X,R):-R1 is R-1,eulerU(A,X1,R1),X is X1.
 % Найти делитель числа, являющийся взаимно простым с наибольшим
 % количество цифр данного числа.
 
+delNum(A,X):- delNum(X,A,A,0,0).
+
+delNum(X,A,1,CMD,MD):-X is MD,!.
+delNum(X,A,I,CMD,MD):-
+    I1 is I-1,
+    (
+        0 is (A mod I),
+        codwsc(COUNT,A,I),
+        (
+            COUNT >= CMD,
+            delNum(X,A,I1,COUNT,I);
+            delNum(X,A,I1,CMD,MD)
+        );
+        delNum(X,A,I1,CMD,MD)
+    ),
+    !.
+
+codwsc(COUNT,0,DEL):- COUNT is 0,!.
+codwsc(COUNT,NUM,DEL):-
+    NUM1 is NUM div 10,
+    (
+        nod(NUM mod 10,DEL,D),
+        D is 1,
+        codwsc(COUNT,NUM1,DEL),
+        COUNT is COUNT+1;
+        codwsc(COUNT,NUM1,DEL)
+    ),
+    !.
+%13 воспользуюсь минус заданием
+%предикаты для работы со списком
+write_list([]):-!.
+write_list([Head|Tail]):-write(Head), write(" "), write_list(Tail).
+
+read_list(0, []):-!.
+read_list(N, [X|T]):- read(X), N1 is N-1, read_list(N1, T).
+%длина списка
+list_length([H|T], Length):-list_length([H|T], 0, Length).
+list_length([], Length, Length):-!.
+list_length([_|T], CurLength, Length):- CurN1 is CurLength+1, list_length(T, CurN1, Length).
