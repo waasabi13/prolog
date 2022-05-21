@@ -70,7 +70,7 @@ maxU(X,M):-
 	X1 is X div 10,
 	maxU(X1,M1),
 	M2 is X mod 10,
-       (M2>M1, M is M2;M is M1),!.
+       (M2>M1, M is M2,!;M is M1).
 %16
 maxD(X,M):- maxD(X,0,M).
 maxD(0,M,M):-!.
@@ -93,3 +93,11 @@ fibU(N, X):- N1 is N - 1, N2 is N - 2, fibU(N1, X1), fibU(N2, X2), X is X1 + X2.
 fibD(N,X):-fibD(1,1,2,N,X).
 fibD(_,F,N,N,F):-!.
 fibD(A,B,K,N,X):- C is A+B, K1 is K+1,fibD(B,C,K1,N,X).
+
+
+
+
+
+
+
+
