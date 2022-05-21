@@ -67,12 +67,34 @@ task15:-write("Dlina spiska: "), read(Count),readList(Count,List),
     list_length(List,Len),getMaxInd(List,IndMax),
     X is Len-IndMax-1, write(X),!.
 
+%16
+getMinInd([H|T],MinInd):-getMinInd([H|T],H,0,0,MinInd).
+getMinInd([],_,Answer,_,Answer):-!.
+getMinInd([H|T],Min,_,CurInd,Answer):-CurInd1 is CurInd+1,H<Min,NewMinInd is CurInd,NewMin is H,getMaxInd(T,NewMin,NewMinInd,CurInd1,Answer),!.
+getMinInd([_|T],Min,MinInd,CurInd,Answer):-CurInd1 is CurInd+1,getMinInd(T,Min,MinInd,CurInd1,Answer).
+
+append1([],X,X).
+append1([X|T],Y,[X|T1]):- append1(T,Y,T1).
+
+take(List,A,B,X):-take(List,A,B,X,[],0).
+take([],_,_,X,X,_):-!.
+take([H|T],A,B,X,L,C):-C>A,C<B,!,C1 is C+1, append(L,[H],LL),take(T,A,B,X,LL,C1).
+take([_|T],A,B,X,L,C):-C1 is C+1,take(T,A,B,X,L,C1).
+
+rev([H|T],X):-rev([H|T],X,[]).
+rev([],X,X):-!.
+rev([H|T],X,L):-append([H],L,LL),rev(T,X,LL).
+
+min(X,Y,X):-X<Y,!.
+min(_,Y,Y).
+max(X,Y,X):-X>Y,!.
+max(_,Y,Y).
 
 
-
-
-
-
+task16:- read(N),read_list(N,List),
+    getMinInd(List,X),getMaxInd(List,Y),A is X+1,B is Y+1,min(A,B,C),max(A,B,D),
+    take(List,-1,C,L),list_length(List,K),K1 is K+2,D1 is D-2,take(List,D1,K1,LL),take(List,X,Y,R),rev(R,R1),
+    append1(L,R1,T),append1(T,LL,T1),write_list(T1),!.
 
 
 
