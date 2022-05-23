@@ -57,7 +57,15 @@ list_length([], Length, Length):-!.
 list_length([_|T], CurLength, Length):- CurN1 is CurLength+1, list_length(T, CurN1, Length).
 
 %15
+getMaxInd([H|T],MaxInd):-getMaxInd([H|T],H,0,0,MaxInd).
+getMaxInd([],_,Answer,_,Answer):-!.
+getMaxInd([H|T],Max,_,CurInd,Answer):-CurInd1 is CurInd+1,H>Max,NewMaxInd is CurInd,NewMax is H,getMaxInd(T,NewMax,NewMaxInd,CurInd1,Answer),!.
+getMaxInd([_|T],Max,MaxInd,CurInd,Answer):-CurInd1 is CurInd+1,getMaxInd(T,Max,MaxInd,CurInd1,Answer).
 
+task15:-write("Dlina spiska: "), read(Count),readList(Count,List),
+    write("Kolvo elementov posle max: "),
+    list_length(List,Len),getMaxInd(List,IndMax),
+    X is Len-IndMax-1, write(X),!.
 %17
 countElemBetweenAB([],A,B,Count):-Count is 0,!.
 countElemBetweenAB([H|T],A,B,Count):-

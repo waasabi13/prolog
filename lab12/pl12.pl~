@@ -57,51 +57,6 @@ list_length([], Length, Length):-!.
 list_length([_|T], CurLength, Length):- CurN1 is CurLength+1, list_length(T, CurN1, Length).
 
 %15
-maxIndex([H|T],Max):- maxIndex([H|T],H,Max,0,Index_Max,0).
-maxIndex([],Max,Max,Index,Index_Max,Index):-!.
-maxIndex([H|T],NowMax,Max,NowIndex,Index_Max,Index):-
-    Index1 is Index+1,
-    (H >= NowMax,maxIndex(T,H,Max,Index,Index_Max,Index1);maxIndex(T,NowMax,Max,NowIndex,Index_Max,Index1)),!.
-
-minIndex([H|T],Max,Index_Max):- minIndex([H|T],H,Max,0,Index_Max,0).
-minIndex([],NowMax,Max,NowIndex,Index_Max,Index):-Max is NowMax,Index_Max is NowIndex,!.
-minIndex([H|T],NowMax,Max,NowIndex,Index_Max,Index):-
-    Index1 is Index+1,
-    (NowMax>= H,minIndex(T,H,Max,Index,Index_Max,Index1);minIndex(T,NowMax,Max,NowIndex,Index_Max,Index1)),!.
-
-task15:-write("Dlina spiska: "), read(Count),read_list(Count,List),
-    write("Kolvo elementov posle max: "),
-    list_length(List,Len),maxIndex(List,_,IndMax),
-    X is Len-IndMax-1, write(X),!.
-
-%16
-getMinInd([H|T],MinInd):-getMinInd([H|T],H,0,0,MinInd).
-getMinInd([],_,Answer,_,Answer):-!.
-getMinInd([H|T],Min,_,CurInd,Answer):-CurInd1 is CurInd+1,H<Min,NewMinInd is CurInd,NewMin is H,getMaxInd(T,NewMin,NewMinInd,CurInd1,Answer),!.
-getMinInd([_|T],Min,MinInd,CurInd,Answer):-CurInd1 is CurInd+1,getMinInd(T,Min,MinInd,CurInd1,Answer).
-
-append1([],X,X).
-append1([X|T],Y,[X|T1]):- append1(T,Y,T1).
-
-take(List,A,B,X):-take(List,A,B,X,[],0).
-take([],_,_,X,X,_):-!.
-take([H|T],A,B,X,L,C):-C>A,C<B,!,C1 is C+1, append(L,[H],LL),take(T,A,B,X,LL,C1).
-take([_|T],A,B,X,L,C):-C1 is C+1,take(T,A,B,X,L,C1).
-
-rev([H|T],X):-rev([H|T],X,[]).
-rev([],X,X):-!.
-rev([H|T],X,L):-append([H],L,LL),rev(T,X,LL).
-
-min(X,Y,X):-X<Y,!.
-min(_,Y,Y).
-max(X,Y,X):-X>Y,!.
-max(_,Y,Y).
-
-task16:- read(N),read_list(N,List),
-    minIndex(List,_,X),maxIndex(List,_,Y),A is X+1,B is Y+1,min(A,B,C),max(A,B,D),
-    take(List,-1,C,L),list_length(List,K),K1 is K+2,D1 is D-2,take(List,D1,K1,LL),take(List,X,Y,R),rev(R,R1),
-    append(L,R1,T),append(T,LL,T1),write_list(T1),!.
-
 
 %17
 countElemBetweenAB([],A,B,Count):-Count is 0,!.
@@ -115,19 +70,6 @@ countElemBetweenAB([H|T],A,B,Count):-
     ).
 
 task7:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
-%20
-ifMaxBetweenAB(List,A,B,Flag):-
-    maxIndex(List,Max,IndexMax),
-    (
-        A<Max,
-        B>Max,
-
-        Flag is 1;
-
-        Flas is 0
-    ).
-
-task10:- read(N),read_list(N,List),read(A),read(B),ifMaxBetweenAB(List,A,B,Flag),write(Flag),!.
 
 
 
