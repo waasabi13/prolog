@@ -17,7 +17,7 @@ eulerU(A,X,R):-R1 is R-1,eulerU(A,X1,R1),X is X1.
 
 delNum(A,X):- delNum(X,A,A,0,0).
 
-delNum(X,A,1,CMD,MD):-X is MD,!.
+delNum(X,_,1,_,MD):-X is MD,!.
 delNum(X,A,I,CMD,MD):-
     I1 is I-1,
     (
@@ -32,7 +32,7 @@ delNum(X,A,I,CMD,MD):-
     ),
     !.
 
-codwsc(COUNT,0,DEL):- COUNT is 0,!.
+codwsc(COUNT,0,_):- COUNT is 0,!.
 codwsc(COUNT,NUM,DEL):-
     NUM1 is NUM div 10,
     (
@@ -62,12 +62,47 @@ getMaxInd([],_,Answer,_,Answer):-!.
 getMaxInd([H|T],Max,_,CurInd,Answer):-CurInd1 is CurInd+1,H>Max,NewMaxInd is CurInd,NewMax is H,getMaxInd(T,NewMax,NewMaxInd,CurInd1,Answer),!.
 getMaxInd([_|T],Max,MaxInd,CurInd,Answer):-CurInd1 is CurInd+1,getMaxInd(T,Max,MaxInd,CurInd1,Answer).
 
-task15:-write("Dlina spiska: "), read(Count),readList(Count,List),
+task15:-write("Dlina spiska: "), read(Count),read_list(Count,List),
     write("Kolvo elementov posle max: "),
     list_length(List,Len),getMaxInd(List,IndMax),
     X is Len-IndMax-1, write(X),!.
+%16
+append([],X,X).
+append([X|T],Y,[X|T1]):- append(T,Y,T1).
+
+maxIndex([H|T],Max,Index_Max):- maxIndex([H|T],H,Max,0,Index_Max,0).
+maxIndex([],NowMax,Max,NowIndex,Index_Max,_):-Max is NowMax,Index_Max is NowIndex,!.
+maxIndex([H|T],NowMax,Max,NowIndex,Index_Max,Index):-
+    Index1 is Index+1,
+    (H >= NowMax,maxIndex(T,H,Max,Index,Index_Max,Index1);maxIndex(T,NowMax,Max,NowIndex,Index_Max,Index1)),!.
+
+minIndex([H|T],Max,Index_Max):- minIndex([H|T],H,Max,0,Index_Max,0).
+minIndex([],NowMax,Max,NowIndex,Index_Max,_):-Max is NowMax,Index_Max is NowIndex,!.
+minIndex([H|T],NowMax,Max,NowIndex,Index_Max,Index):-
+    Index1 is Index+1,
+    (NowMax>= H,minIndex(T,H,Max,Index,Index_Max,Index1);minIndex(T,NowMax,Max,NowIndex,Index_Max,Index1)),!.
+
+take(List,A,B,X):-take(List,A,B,X,[],0).
+take([],_,_,X,X,_):-!.
+take([H|T],A,B,X,L,C):-C>A,C<B,!,C1 is C+1, append(L,[H],LL),take(T,A,B,X,LL,C1).
+take([_|T],A,B,X,L,C):-C1 is C+1,take(T,A,B,X,L,C1).
+
+rev([H|T],X):-rev([H|T],X,[]).
+rev([],X,X):-!.
+rev([H|T],X,L):-append([H],L,LL),rev(T,X,LL).
+
+min(X,Y,X):-X<Y,!.
+min(_,Y,Y).
+max(X,Y,X):-X>Y,!.
+max(_,Y,Y).
+
+
+task16:- read(N),read_list(N,List),
+    minIndex(List,_,X),maxIndex(List,_,Y),A is X+1,B is Y+1,min(A,B,C),max(A,B,D),
+    take(List,-1,C,L),list_length(List,K),K1 is K+2,D1 is D-2,take(List,D1,K1,LL),take(List,X,Y,R),rev(R,R1),
+    append(L,R1,T),append(T,LL,T1),write_list(T1),!.
 %17
-countElemBetweenAB([],A,B,Count):-Count is 0,!.
+countElemBetweenAB([],_,_,Count):-Count is 0,!.
 countElemBetweenAB([H|T],A,B,Count):-
     (
         H<B,
@@ -78,6 +113,24 @@ countElemBetweenAB([H|T],A,B,Count):-
     ).
 
 task7:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
+%18
+getSecondMax([H|T],Max,IndexMax,FIndexMax):- getSecondMax([H|T],H,Max,0,IndexMax,0,FIndexMax).
+getSecondMax([],NowMax,Max,NowIndex,IndexMax,_,_):-Max is NowMax,IndexMax is NowIndex,!.
+getSecondMax([H|T],NowMax,Max,NowIndex,IndexMax,Index,FIndexMax):-
+    Index1 is Index+1,
+    (
+        H >= NowMax,
+        not(Index = FIndexMax),
+
+        getSecondMax(T,H,Max,Index,IndexMax,Index1,FIndexMax);
+
+        getSecondMax(T,NowMax,Max,NowIndex,IndexMax,Index1,FIndexMax)
+    ),!.
+task18:-read(N),read_list(N,List),maxIndex(List,_,FirstIndex),
+    getSecondMax(List,_,SecondIndex,FirstIndex),
+    min(FirstIndex,SecondIndex,Start),max(FirstIndex,SecondIndex,End),
+    take(List,Start,End,Result),write_list(Result).
+
 
 
 
