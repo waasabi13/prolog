@@ -148,5 +148,17 @@ task19:-read(N),read_list(N,List),minIndex(List,_,FirstIndex),
     getSecondMin(List,_,SecondIndex,FirstIndex),
     min(FirstIndex,SecondIndex,Start),max(FirstIndex,SecondIndex,End),
     take(List,Start,End,Result),write_list(Result).
+%20
+f(List,A,B):-f(List,A,B,Answer).
+f(List,A,B,Answer):-
+    maxIndex(List,Max,_),
+    (
+        A<Max,
+        B>Max,
+        Answer is 1;
+        Answer is 0,fail
+    ).
 
+task20:- read(N),read_list(N,List),read(A),read(B),f(List,A,B,Answer),
+    write(Answer),!.
 
