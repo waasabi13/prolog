@@ -131,6 +131,22 @@ task18:-read(N),read_list(N,List),maxIndex(List,_,FirstIndex),
     min(FirstIndex,SecondIndex,Start),max(FirstIndex,SecondIndex,End),
     take(List,Start,End,Result),write_list(Result).
 
+%19
+getSecondMin([H|T],Min,IndexMin,FIndexMin):- getSecondMin([H|T],H,Min,0,IndexMin,0,FIndexMin).
+getSecondMin([],NowMin,Min,NowIndex,IndexMin,_,_):-Min is NowMin,IndexMin is NowIndex,!.
+getSecondMin([H|T],NowMin,Min,NowIndex,IndexMin,Index,FIndexMin):-
+    Index1 is Index+1,
+    (
+        NowMin >= H,
+        not(Index = FIndexMin),
 
+        getSecondMin(T,H,Min,Index,IndexMin,Index1,FIndexMin);
+
+        getSecondMin(T,NowMin,Min,NowIndex,IndexMin,Index1,FIndexMin)
+    ),!.
+task19:-read(N),read_list(N,List),minIndex(List,_,FirstIndex),
+    getSecondMin(List,_,SecondIndex,FirstIndex),
+    min(FirstIndex,SecondIndex,Start),max(FirstIndex,SecondIndex,End),
+    take(List,Start,End,Result),write_list(Result).
 
 
