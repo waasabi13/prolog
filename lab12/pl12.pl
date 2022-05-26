@@ -112,7 +112,7 @@ countElemBetweenAB([H|T],A,B,Count):-
         countElemBetweenAB(T,A,B,Count)
     ).
 
-task7:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
+task17:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
 %18
 getSecondMax([H|T],Max,IndexMax,FIndexMax):- getSecondMax([H|T],H,Max,0,IndexMax,0,FIndexMax).
 getSecondMax([],NowMax,Max,NowIndex,IndexMax,_,_):-Max is NowMax,IndexMax is NowIndex,!.
