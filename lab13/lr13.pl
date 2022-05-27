@@ -45,3 +45,46 @@ intfloat([H|T], 1):- not(check(H)),intfloat(T, 0),!;fail.
 intfloat([H|T], 0):- check(H), intfloat(T, 1),!;fail.
 
 task2:- read(Count), read_list(Count, List), intfloat(List).
+%3
+makeEmptyList([]).
+isElemUnique(List,Elem):-countOfThisElem(List,Elem,Count),1 is Count.
+
+countOfThisElem([],Elem,Count):- Count is 0,!.
+countOfThisElem([H|T],Elem,Count):-
+    H = Elem,
+
+    countOfThisElem(T,Elem,Count1),
+    Count is 1+Count1,!;
+
+    countOfThisElem(T,Elem,Count).
+
+listUniqueWithIndex(List,UniList,UniIndexList):-listUniqueWithIndex(List,UniList,UniIndexList,0,List).
+listUniqueWithIndex([],UniList,UniIndexList,Index,StartList):-makeEmptyList(UniList),makeEmptyList(UniIndexList),!.
+listUniqueWithIndex([H|T],UniList,UniIndexList,Index,StartList):-
+    I1 is Index+1,
+    (
+        isElemUnique(StartList,H),
+
+        listUniqueWithIndex(T,UniList1,UniIndexList1,I1,StartList),
+        append([H],UniList1,UniList),
+        append([I1],UniIndexList1,UniIndexList);
+
+        listUniqueWithIndex(T,UniList,UniIndexList,I1,StartList)
+    ),!.
+
+listDelOnAnotherList([],[],NewList).
+listDelOnAnotherList([UH|UT],[IH|IT],NewList):-
+    0 is UH mod IH,
+
+    listDelOnAnotherList(UT,IT,NewList1),
+    append([UH],NewList1,NewList),!;
+
+    listDelOnAnotherList(UT,IT,NewList),!.
+
+listDelOnIndexAndUnique(List,NewList):-
+    listUniqueWithIndex(List,UniList,UniIndexList),
+    listDelOnAnotherList(UniList,UniIndexList,NewList).
+
+task3:- read(N),read_list(N,List),listDelOnIndexAndUnique(List,NewList),write_list(NewList),!.
+
+
