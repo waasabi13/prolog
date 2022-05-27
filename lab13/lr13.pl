@@ -32,3 +32,16 @@ countElemBetweenAB([H|T],A,B,Count):-
     ).
 
 task1:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Count),write(Count),!.
+
+%2 Дан массив чисел. Необходимо проверить, чередуются ли в нем це-
+%лые и вещественные числа.
+
+check(A):-IntA is round(A), IntA = A.
+
+
+intfloat([H|T]):-check(H), intfloat(T, 1); intfloat(T, 0).
+intfloat([],_):-!.
+intfloat([H|T], 1):- not(check(H)),intfloat(T, 0),!;fail.
+intfloat([H|T], 0):- check(H), intfloat(T, 1),!;fail.
+
+task2:- read(Count), read_list(Count, List), intfloat(List).
