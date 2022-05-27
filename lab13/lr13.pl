@@ -46,7 +46,6 @@ intfloat([H|T], 0):- check(H), intfloat(T, 1),!;fail.
 
 task2:- read(Count), read_list(Count, List), intfloat(List).
 %3
-makeEmptyList([]).
 isElemUnique(List,Elem):-countOfThisElem(List,Elem,Count),1 is Count.
 
 countOfThisElem([],Elem,Count):- Count is 0,!.
@@ -59,7 +58,7 @@ countOfThisElem([H|T],Elem,Count):-
     countOfThisElem(T,Elem,Count).
 
 listUniqueWithIndex(List,UniList,UniIndexList):-listUniqueWithIndex(List,UniList,UniIndexList,0,List).
-listUniqueWithIndex([],UniList,UniIndexList,Index,StartList):-makeEmptyList(UniList),makeEmptyList(UniIndexList),!.
+listUniqueWithIndex([],[],[],Index,StartList):-!.
 listUniqueWithIndex([H|T],UniList,UniIndexList,Index,StartList):-
     I1 is Index+1,
     (

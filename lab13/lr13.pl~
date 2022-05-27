@@ -54,9 +54,9 @@ countOfThisElem([H|T],Elem,Count):-
     H = Elem,
 
     countOfThisElem(T,Elem,Count1),
-    Count is 1+Count1;
+    Count is 1+Count1,!;
 
-    countOfThisElem(T,Elem,Count),!.
+    countOfThisElem(T,Elem,Count).
 
 listUniqueWithIndex(List,UniList,UniIndexList):-listUniqueWithIndex(List,UniList,UniIndexList,0,List).
 listUniqueWithIndex([],UniList,UniIndexList,Index,StartList):-makeEmptyList(UniList),makeEmptyList(UniIndexList),!.
