@@ -106,5 +106,23 @@ task4:-
     not(inList(Hairs,[rijov,red])),
     write(Hairs),
     !.
+%5 Три подруги вышли в белом, зеленом и синем платьях и туфлях. Известно, что только у Ани цвета платья и туфлей совпадали.
+% Ни туфли, ни платье Вали не были белыми. Наташа была в зеленых туфлях. Определить цвета платья и туфель на каждой из подруг.
+task5:-
+    Girls=[_,_,_],
+    inList(Girls,[anya,X,X]),
+    inList(Girls,[valya,_,_]),
+    inList(Girls,[natasha,zel,_]),
+    inList(Girls,[_,bel,_]),
+    inList(Girls,[_,sin,_]),
+    inList(Girls,[_,zel,_]),
+    inList(Girls,[_,_,bel]),
+    inList(Girls,[_,_,sin]),
+    inList(Girls,[_,_,zel]),
+    not(inList(Girls,[valya,bel,_])),
+    not(inList(Girls,[valya,_,bel])),
+    not(inList(Girls,[natasha,Y,Y])),
+    write(Girls),
+    !.
 
 

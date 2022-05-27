@@ -85,5 +85,44 @@ listDelOnIndexAndUnique(List,NewList):-
     listDelOnAnotherList(UniList,UniIndexList,NewList).
 
 task3:- read(N),read_list(N,List),listDelOnIndexAndUnique(List,NewList),write_list(NewList),!.
+%4 Беседует трое друзей: Белокуров, Рыжов, Чернов. Брюнет
+% сказал Белокурову: “Любопытно, что один из нас блондин, другой брюнет,
+% третий - рыжий, но ни у кого цвет волос не соответствует фамилии”. Какой
+% цвет волос у каждого из друзей?
+inList([],_):-fail.
+inList([X|_],X).
+inList([_|T],X):-inList(T,X).
+
+task4:-
+    Hairs=[_,_,_],
+    inList(Hairs,[belov,_]),
+    inList(Hairs,[chernov,_]),
+    inList(Hairs,[rijov,_]),
+    inList(Hairs,[_,red]),
+    inList(Hairs,[_,blond]),
+    inList(Hairs,[_,brunet]),
+    not(inList(Hairs,[belov,blond])),
+    not(inList(Hairs,[chernov,brunet])),
+    not(inList(Hairs,[rijov,red])),
+    write(Hairs),
+    !.
+%5 Три подруги вышли в белом, зеленом и синем платьях и туфлях. Известно, что только у Ани цвета платья и туфлей совпадали.
+% Ни туфли, ни платье Вали не были белыми. Наташа была в зеленых туфлях. Определить цвета платья и туфель на каждой из подруг.
+task5:-
+    Girls=[_,_,_],
+    inList(Girls,[anya,X,X]),
+    inList(Girls,[valya,_,_]),
+    inList(Girls,[nastya,zel,_]),
+    inList(Girls,[_,bel,_]),
+    inList(Girls,[_,sin,_]),
+    inList(Girls,[_,zel,_]),
+    inList(Girls,[_,_,bel]),
+    inList(Girls,[_,_,sin]),
+    inList(Girls,[_,_,zel]),
+    not(inList(Girls,[valya,bel,_])),
+    not(inList(Girls,[valya,_,bel])),
+    not(inList(Girls,[nastya,Y,Y])),
+    write(Girls),
+    !.
 
 
