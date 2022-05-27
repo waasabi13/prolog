@@ -124,5 +124,22 @@ task5:-
     not(inList(Girls,[natasha,Y,Y])),
     write(Girls),
     !.
+%6 На заводе работали три друга: слесарь, токарь и сварщик. Их
+%фамилии Борисов, Иванов и Семенов. У слесаря нет ни братьев, ни сестер. Он
+%самый младший из друзей. Семенов, женатый на сестре Борисова, старше то-
+%каря. Назвать фамилии слесаря, токаря и сварщика.
+
+task6:- Zavod=[_, _, _],
+    inList(Zavod, [slesar, _, mladshiy, _, 0]),
+    inList(Zavod, [tokar, _,sredniy, _, _]),
+    inList(Zavod, [svarshik, _, _, _, _]),
+    inList(Zavod, [_, borisov,_,_, 1]),
+    inList(Zavod, [_, ivanov,_, _, _]),
+    inList(Zavod, [_, semenov,starshiy,_,_]),
+    inList(Zavod, [slesar, Who1, _, _, _]),
+    inList(Zavod, [tokar, Who2, _, _, _]),
+    inList(Zavod, [svarshik, Who3, _, _, _]),
+    write(Zavod),nl,write('slesar = '),write(Who1),nl,write('tokar = '),write(Who2),nl,write('svarshick = '),write(Who3),!.
+
 
 
