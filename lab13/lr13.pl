@@ -36,19 +36,19 @@ task1:- read(N),read_list(N,List),read(A),read(B),countElemBetweenAB(List,A,B,Co
 %2 Дан массив чисел. Необходимо проверить, чередуются ли в нем це-
 %лые и вещественные числа.
 
-check(A):-IntA is round(A), IntA = A.
+check(A):-IntA is round(A), IntA = A. %1.5=1
 
 
-intfloat([H|T]):-check(H), intfloat(T, 1); intfloat(T, 0).
+intfloat([H|T]):-check(H), intfloat(T, 1); intfloat(T, 0).% маркер чтобы понимать с какого числа начали
 intfloat([],_):-!.
 intfloat([H|T], 1):- not(check(H)),intfloat(T, 0),!;fail.
 intfloat([H|T], 0):- check(H), intfloat(T, 1),!;fail.
 
 task2:- read(Count), read_list(Count, List), intfloat(List).
 %3
-isElemUnique(List,Elem):-countOfThisElem(List,Elem,Count),1 is Count.
+isElemUnique(List,Elem):-countOfThisElem(List,Elem,Count),1 is Count.%уникальный ли в списке
 
-countOfThisElem([],Elem,Count):- Count is 0,!.
+countOfThisElem([],_,Count):- Count is 0,!.%число вхождений
 countOfThisElem([H|T],Elem,Count):-
     H = Elem,
 
@@ -57,8 +57,8 @@ countOfThisElem([H|T],Elem,Count):-
 
     countOfThisElem(T,Elem,Count).
 
-listUniqueWithIndex(List,UniList,UniIndexList):-listUniqueWithIndex(List,UniList,UniIndexList,0,List).
-listUniqueWithIndex([],[],[],Index,StartList):-!.
+listUniqueWithIndex(List,UniList,UniIndexList):-listUniqueWithIndex(List,UniList,UniIndexList,0,List).%уникальный ли элемент и запомнить индекс
+listUniqueWithIndex([],[],[],_,_):-!.
 listUniqueWithIndex([H|T],UniList,UniIndexList,Index,StartList):-
     I1 is Index+1,
     (
@@ -71,7 +71,7 @@ listUniqueWithIndex([H|T],UniList,UniIndexList,Index,StartList):-
         listUniqueWithIndex(T,UniList,UniIndexList,I1,StartList)
     ),!.
 
-listDelOnAnotherList([],[],NewList).
+listDelOnAnotherList([],[],_).
 listDelOnAnotherList([UH|UT],[IH|IT],NewList):-
     0 is UH mod IH,
 
@@ -140,6 +140,134 @@ task6:- Zavod=[_, _, _],
     inList(Zavod, [tokar, Who2, _, _, _]),
     inList(Zavod, [svarshik, Who3, _, _, _]),
     write(Zavod),nl,write('slesar = '),write(Who1),nl,write('tokar = '),write(Who2),nl,write('svarshick = '),write(Who3),!.
+
+%A слева от B
+left(_, _, [_]):-fail.
+left(A, B, [A|[B|_]]).
+left(A, B, [_|T]):-left(A, B, T).
+
+%А справа от В
+right(_, _, [_]):-fail.
+right(A, B, [B|[A|_]]).
+right(A, B, [_|T]):-right(A, B, T).
+
+%около
+before(A, B, List):-left(A, B, List).
+before(A, B, List):-right(A, B, List).
+
+task7:- Drinks = [_, _, _, _],
+    inList(Drinks,[water, _]),
+    inList(Drinks,[milk, _]),
+    inList(Drinks,[lemonade, _]),
+    inList(Drinks,[kvas, _]),
+    inList(Drinks,[_, bottle]),
+    inList(Drinks,[_, kuvshin]),
+    inList(Drinks,[_, banka]),
+    inList(Drinks,[_, glass]),
+    not(inList(Drinks,[water, bottle])),
+    not(inList(Drinks,[milk, bottle])),
+    not(inList(Drinks,[water, banka])),
+    not(inList(Drinks,[lemonade, banka])),
+    left([_, kuvshin],[lemonade,_], Drinks),
+    right([kvas, _], [lemonade,_], Drinks),
+    before([_, banka], [_, glass], Drinks),
+    before([milk,_], [_, glass], Drinks),
+    write(Drinks).
+%Воронов, Павлов, Левицкий и Сахаров – четыре талантли-
+%вых молодых человека. Один из них танцор, другой художник, третий-певец,
+%а четвертый-писатель. О них известно следующее: Воронов и Левицкий си-
+%дели в зале консерватории в тот вечер, когда певец дебютировал в сольном
+%концерте. Павлов и писатель вместе позировали художнику. Писатель написал
+%биографическую повесть о Сахарове и собирается написать о Воронове. Воро-
+%нов никогда не слышал о Левицком. Кто чем занимается?
+task8:-Talents = [_, _, _, _],
+    inList(Talents, [voronov, _, ne_slyshal_o_levitskom]),
+    inList(Talents, [pavlov, _, poziroval_hudozhniku]),
+    inList(Talents, [levitskiy, _, _]),
+    inList(Talents, [saharov, _, _]),
+    inList(Talents, [_, dancer, _]),
+    inList(Talents, [_, painter, _]),
+    inList(Talents, [_, singer, _]),
+    inList(Talents, [_, writer, poziroval_hudozhniku]),
+    not(inList(Talents, [pavlov, singer,_])),
+    not(inList(Talents, [levitskiy, singer,_])),
+    not(inList(Talents, [pavlov, painter,_])),
+    not(inList(Talents, [saharov, writer,_])),
+    not(inList(Talents, [voronov, writer,_])),
+    inList(Talents, [voronov, Who1, _]),
+    inList(Talents, [pavlov, Who2, _]),
+    inList(Talents, [levitskiy, Who3, _]),
+    inList(Talents, [saharov, Who4, _]),
+    write('voronov - '), write(Who1), nl, write('pavlov - '), write(Who2), nl, write('levitskiy - '), write(Who3), nl, write('saharov - '), write(Who4).
+%Задание 19 Три друга заняли первое, второе, третье места в соревнова-
+% ниях универсиады. Друзья разной национальности, зовут их по-разному, и
+% любят они разные виды спорта. Майкл предпочитает баскетбол и играет
+% лучше,чем американец. Израильтянин Саймон играет лучше теннисиста. Игрок в
+% крикет занял первое место. Кто является австралийцем? Каким спортом
+% увлекается Ричард?
+
+task9:- Sport=[_, _, _],
+    inList(Sport, [michael, _, basketball, _]),
+    inList(Sport, [simon, israel, _, _]),
+    inList(Sport, [richard,_, _, _]),
+    inList(Sport, [_, _, cricket, first]),
+    inList(Sport, [_, australia, _, _]),
+    inList(Sport, [_, _, tennis, _]),
+    inList(Sport, [_, america, _, _]),
+    in_list(Sport, [_, _, _, second]),
+    in_list(Sport, [_, _, _, third]),
+    not(inList(Sport,[_, america, basketball,_])),
+    not(inList(Sport, [simon, tennis,_,_])),
+    inList(Sport, [Who1, australia, _, _]),
+    inList(Sport, [richard,_,Who2,_]),
+    write('australia - '), write(Who1), nl, write('richard - '), write(Who2), nl, write(Sport).
+%10
+/* Пятеро детей Алик, Боря, Витя, Лена и Даша приехали в ла-
+герь из 5 разных городов: Харькова, Умани, Полтавы, Славянска и Краматор-
+ска. Есть 4 высказывания: 1) Если Алик не из Умани, то Боря из Краматорска.
+2) Или Боря, или Витя приехали из Харькова. 3) Если Витя не из Славянска, то
+Лена приехала из Харькова. 4) Или Даша приехала из Умани, или Лена из Кра-
+маторска. Кто откуда приехал?
+*/
+task10:-
+    Kortej=[_,_,_,_,_],
+    inList(Kortej,[alik,_]),
+    inList(Kortej,[borya,_]),
+    inList(Kortej,[vitya,_]),
+    inList(Kortej,[lena,_]),
+    inList(Kortej,[dasha,_]),
+
+    inList(Kortej,[_,kharkiv]),
+    inList(Kortej,[_,uman]),
+    inList(Kortej,[_,poltava]),
+    inList(Kortej,[_,slavyansk]),
+    inList(Kortej,[_,kramatorsk]),
+
+    (
+        not(inList(Kortej,[alik,uman])),%пункт а и так далее
+        inList(Kortej,[borya,kramatorsk]);
+
+        inList(Kortej,[alik,uman])
+    ),
+    (
+        inList(Kortej,[borya,kharkiv]);
+        inList(Kortej,[vitya,kharkiv])
+    ),
+    (
+        not(inList(Kortej,[vitya,slavyansk])),
+        inList(Kortej,[lena,kharkiv]);
+
+        inList(Kortej,[vitya,slavyansk])
+    ),
+    (
+        inList(Kortej,[dasha,uman]);
+        inList(Kortej,[lena,kramatorsk])
+    ),
+    write(Kortej),
+    !.
+
+
+
 
 
 
