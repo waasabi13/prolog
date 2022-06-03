@@ -78,6 +78,19 @@ count_no_spaces([_|T], CurCnt, Result) :- count_no_spaces(T, CurCnt, Result), !.
 count_no_spaces(Strings, Result) :- count_no_spaces(Strings, 0, Result), !.
 
 task22 :- see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, count_no_spaces(StrList, Cnt), write('Количество строк без пробелов: '), write(Cnt), nl.
+% 2.3
+count_sym_in_list([], _, Result, Result) :- !.
+count_sym_in_list([H|T], Sym, CurCnt, Result) :- count_symbols(H, Sym, Cnt), NewCnt is CurCnt + Cnt, count_sym_in_list(T, Sym, NewCnt, Result), !.
+count_sym_in_list(List, Sym, Result) :- count_sym_in_list(List, Sym, 0, Result), !.
+
+write_word_with_a([], _) :- !.
+write_word_with_a([H|T], Avg) :- count_symbols(H, "a", Cnt1), count_symbols(H, "A", Cnt2), Cnt is Cnt1 + Cnt2, Cnt > Avg, write_str(H), nl,
+    write_word_with_a(T, Avg), !.
+write_word_with_a([_|T], Avg) :- write_word_with_a(T, Avg), !.
+
+task23 :-
+    see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, len(StrList, Len), count_sym_in_list(StrList, "a", Cnt1), count_sym_in_list(StrList, "A", Cnt2),
+    CntA is Cnt1 + Cnt2, Avg is CntA / Len, write("Среднее количество букв А: "), write(Avg), nl, write_word_with_a(StrList, Avg).
 
 
 
