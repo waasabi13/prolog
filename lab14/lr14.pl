@@ -149,6 +149,11 @@ powerset([], []).
 powerset([H|Sub_set], [H|SetTail]) :- powerset(Sub_set, SetTail).
 powerset(Sub_set, [_|SetTail]) :- powerset(Sub_set, SetTail).
 powerset(Set) :- powerset(A, Set), write("\t"), write(A), nl, fail.
+% Все сочетания по k без повторений
+combs([], _, 0) :- !.
+combs([H|Sub_set], [H|SetTail], K) :- K1 is K-1, combs(Sub_set, SetTail, K1).
+combs(Sub_set, [_|SetTail], K) :- combs(Sub_set, SetTail, K).
+combs(Set, K) :- combs(A, Set, K), write("\t"), write(A), nl, fail.
 
 
 

@@ -144,6 +144,11 @@ k_perms(_, 0, Result, Result) :- !.
 k_perms(List, K, CurPerm, Result) :- in_list_exclude(List, X, Tail), K1 is K - 1, k_perms(Tail, K1, [X|CurPerm], Result).
 k_perms(List, K, Result) :- k_perms(List, K, [], Result).
 k_perms(List, K) :- k_perms(List, K, Perm), write("\t"), write(Perm), nl, fail.
+% Все подмножества
+powerset([], []).
+powerset([H|Sub_set], [H|SetTail]) :- powerset(Sub_set, SetTail).
+powerset(Sub_set, [_|SetTail]) :- powerset(Sub_set, SetTail).
+powerset(Set) :- powerset(A, Set), write("\t"), write(A), nl, fail.
 
 
 
