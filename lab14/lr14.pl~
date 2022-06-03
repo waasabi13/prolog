@@ -164,7 +164,7 @@ read_list(0, []) :- !.
 read_list(I, [X|T]) :- read(X), I1 is I - 1, read_list(I1, T).
 
 task6 :-
-    write("Elements count: "), read(N), read_list(N, List), write('K: '), read(K),
+    write("Количество элементов: "), read(N), read_list(N, List), write('K: '), read(K),
     tell('C:/Prolog/lab14/out_comb.txt'),
     write("Множество: "), write(List), write("; K = "), write(K), nl, nl,
     write(K), write("Размещения с повторениями: "), nl, not(k_perms_rep(List, K)), nl,
