@@ -228,8 +228,17 @@ isStrUpOrderWithStroch([StrH|StrT],PreviousChar):-(StrH >= 97,122 >= StrH,(StrH>
 			isStrUpOrderWithStroch(StrT,PreviousChar)),!.
 
 task3:-read_str(Str,N),isStrUpOrderWithStroch(Str),!.
-%
+%Количество A
 task4:-read_str(Str,N,0), count_symbols(Str, "A", Count),write(Count),!.
+% Получили путь к файлу->название файла
+getNameOfFile(Str,Name):-getNameOfFile(Str,Name,[]).
+getNameOfFile([StrH|StrT],Name,NowName):-
+    StrH = 46,  % .
+	append([],NowName,Name),!;
+        (StrH = 47, % /
+	getNameOfFile(StrT,Name,[]);
+        append(NowName,[StrH],NewName),getNameOfFile(StrT,Name,NewName)),!.
+task5:-read_str(Str,N,0),getNameOfFile(Str,Name),write_str(Name),!.
 
 
 
