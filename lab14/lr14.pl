@@ -92,6 +92,15 @@ task23 :-
     see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, len(StrList, Len), count_sym_in_list(StrList, "a", Cnt1), count_sym_in_list(StrList, "A", Cnt2),
     CntA is Cnt1 + Cnt2, Avg is CntA / Len, write("Среднее количество букв А: "), write(Avg), nl, write_word_with_a(StrList, Avg).
 
+% 2.4
+str_list_to_words_list([], Result, Result) :- !.
+str_list_to_words_list([H|T], CurList, Result) :- split_str(H, " ", StrWords), join(CurList, StrWords, NewList), str_list_to_words_list(T, NewList, Result), !.
+str_list_to_words_list(StrList, Result) :- str_list_to_words_list(StrList, [], Result).
+
+most_freq_word_in_list(Words, Result) :- most_freq_word(Words, Words, 0, [], Result).
+
+task24 :- see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, str_list_to_words_list(StrList, WordsList), most_freq_word_in_list(WordsList, MF), write_str(MF).
+
 
 
 

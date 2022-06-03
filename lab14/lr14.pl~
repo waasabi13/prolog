@@ -90,7 +90,7 @@ write_word_with_a([_|T], Avg) :- write_word_with_a(T, Avg), !.
 
 task23 :-
     see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, len(StrList, Len), count_sym_in_list(StrList, "a", Cnt1), count_sym_in_list(StrList, "A", Cnt2),
-    CntA is Cnt1 + Cnt2, Avg is CntA / Len, write("Avg A per str: "), write(Avg), nl, write_word_with_a(StrList, Avg).
+    CntA is Cnt1 + Cnt2, Avg is CntA / Len, write("Среднее количество букв А: "), write(Avg), nl, write_word_with_a(StrList, Avg).
 
 
 
