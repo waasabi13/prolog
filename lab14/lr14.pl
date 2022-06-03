@@ -49,6 +49,13 @@ task14 :- read_str(Str, Len), task14(Str, Len).
 task14(Str, Len) :- Len > 5, slice(Str, 0, 3, First3), L3 is Len - 3, slice(Str, L3, Len, Last3), write_str(First3), write(" "), write_str(Last3),!.
 task14([Ch|_], Len) :- write_str_loop([Ch], Len).
 
+% 1.5
+find_indexes(List, X, Result) :- find_indexes(List, X, 0, [], Result).
+find_indexes([], _, _, Result, Result) :- !.
+find_indexes([X|T], X, I, CurList, Result) :- join(CurList, [I], NewList), I1 is I + 1, find_indexes(T, X, I1, NewList, Result), !.
+find_indexes([_|T], X, I, CurList, Result) :- I1 is I + 1, find_indexes(T, X, I1, CurList, Result), !.
+
+task15 :- read_str(Str, Len), L1 is Len - 1, slice(Str, L1, Len, [LastSym|_]), find_indexes(Str, LastSym, Result), write(Result).
 
 
 
