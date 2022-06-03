@@ -228,6 +228,8 @@ isStrUpOrderWithStroch([StrH|StrT],PreviousChar):-(StrH >= 97,122 >= StrH,(StrH>
 			isStrUpOrderWithStroch(StrT,PreviousChar)),!.
 
 task3:-read_str(Str,N),isStrUpOrderWithStroch(Str),!.
+%
+task4:-read_str(Str,N,0), count_symbols(Str, "A", Count),write(Count),!.
 
 
 
