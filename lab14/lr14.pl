@@ -9,3 +9,10 @@ write_str([H|Tail]):-put(H),write_str(Tail).
 % 1.1
 task11 :- read_str(Str, Len), write_str(Str), write(", "), write_str(Str),
     write(", "), write_str(Str), write(" "), write(Len).
+% 1.2
+count_symbols(Str, Search, Result) :- char_code(Search, SCode), count_symbols(Str, SCode, 0, Result).
+count_symbols([], _, Result, Result) :- !.
+count_symbols([S|T], Search, CurCnt, Result) :- S = Search, NewCnt is CurCnt + 1, count_symbols(T, Search, NewCnt, Result), !.
+count_symbols([_|T], Search, CurCnt, Result) :- count_symbols(T, Search, CurCnt, Result), !.
+
+task12 :- read_str(Str, _), count_symbols(Str, " ", SpacesCnt), WordsCnt is SpacesCnt + 1, write("Количество слов: "), write(WordsCnt).
