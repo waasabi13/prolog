@@ -134,6 +134,11 @@ k_perms_rep(_, 0, Result, Result) :- !.
 k_perms_rep(List, K, CurList, Result) :- in_list(List, X), K1 is K - 1, k_perms_rep(List, K1, [X|CurList], Result).
 k_perms_rep(List, K, Result) :- k_perms_rep(List, K, [], Result).
 k_perms_rep(List, K) :- k_perms_rep(List, K, Perm), write("\t"), write(Perm), nl, fail.
+% Перестановки
+perms([], Result, Result) :- !.
+perms(List, CurPerm, Result) :- in_list_exclude(List, X, Tail), perms(Tail, [X|CurPerm], Result).
+perms(List, Result) :- perms(List, [], Result).
+perms(List) :- perms(List, P), write("\t"), write(P), nl, fail.
 
 
 

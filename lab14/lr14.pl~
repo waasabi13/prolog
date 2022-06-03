@@ -124,6 +124,16 @@ task25 :-
     see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, str_list_to_words_list(StrList, Words), get_repeating_words(Words, RepWords),
     tell('C:/Prolog/lab14/out.txt'), write_no_rep_words(StrList, RepWords), told.
 
+% Задача 6
+
+in_list_exclude([El|T],El,T).
+in_list_exclude([H|T],El,[H|Tail]):-in_list_exclude(T,El,Tail).
+
+% Размещения по K с повторениями
+k_perms_rep(_, 0, Result, Result) :- !.
+k_perms_rep(List, K, CurList, Result) :- in_list(List, X), K1 is K - 1, k_perms_rep(List, K1, [X|CurList], Result).
+k_perms_rep(List, K, Result) :- k_perms_rep(List, K, [], Result).
+k_perms_rep(List, K) :- k_perms_rep(List, K, Perm), write("\t"), write(Perm), nl, fail.
 
 
 
