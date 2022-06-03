@@ -154,6 +154,27 @@ combs([], _, 0) :- !.
 combs([H|Sub_set], [H|SetTail], K) :- K1 is K-1, combs(Sub_set, SetTail, K1).
 combs(Sub_set, [_|SetTail], K) :- combs(Sub_set, SetTail, K).
 combs(Set, K) :- combs(A, Set, K), write("\t"), write(A), nl, fail.
+% Все сочетания по k с повторениями
+combs_rep([], _, 0) :- !.
+combs_rep([H|Sub_set], [H|SetTail], K):- K1 is K-1, combs_rep(Sub_set, [H|SetTail], K1).
+combs_rep(Sub_set, [_|SetTail], K) :- combs_rep(Sub_set, SetTail, K).
+combs_rep(Set, K) :- combs_rep(A, Set, K), write("\t"), write(A), nl, fail.
+
+read_list(0, []) :- !.
+read_list(I, [X|T]) :- read(X), I1 is I - 1, read_list(I1, T).
+
+task6 :-
+    write("Количество элементов: "), read(N), read_list(N, List), write('K: '), read(K),
+    tell('C:/Prolog/lab14/out_comb.txt'),
+    write("Множество: "), write(List), write("; K = "), write(K), nl, nl,
+    write(K), write("Размещения с повторениями: "), nl, not(k_perms_rep(List, K)), nl,
+    write("Перестановки: "), nl, not(perms(List)), nl,
+    write(K), write("Размещения без повторений: "), nl, not(k_perms(List, K)), nl,
+    write("Подмножества: "), nl, not(powerset(List)), nl,
+    write(K), write("Сочетания без повторений: "), nl, not(combs(List, K)), nl,
+    write(K), write("Сочетания с повторениями: "), nl, not(combs_rep(List, K)), nl,
+    told.
+
 
 
 
