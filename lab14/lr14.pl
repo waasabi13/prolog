@@ -220,6 +220,14 @@ task10_writer :-
     write(Word), nl, fail.
 
 task10 :- tell('C:/Prolog/lab14/out_10.txt'), task10_writer; told.
+%упорядочены ли строчные символы этой строки по возрастанию.
+isStrUpOrderWithStroch(Str):-isStrUpOrderWithStroch(Str,0).
+isStrUpOrderWithStroch(Str):-isStrUpOrderWithStroch(Str,0).
+isStrUpOrderWithStroch([],PreviousChar):-!.
+isStrUpOrderWithStroch([StrH|StrT],PreviousChar):-(StrH >= 97,122 >= StrH,(StrH>PreviousChar,isStrUpOrderWithStroch(StrT,StrH);!,fail);
+			isStrUpOrderWithStroch(StrT,PreviousChar)),!.
+
+task3:-read_str(Str,N),isStrUpOrderWithStroch(Str),!.
 
 
 
