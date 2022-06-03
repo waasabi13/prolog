@@ -3,4 +3,4 @@ Samsung
 Xiaomi
 Honor
 Google
-Sony
+Sony Ericsson

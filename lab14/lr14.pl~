@@ -70,7 +70,14 @@ max_len_in_list([H|T], CurMax, Result) :- len(H, NewMax), NewMax > CurMax, max_l
 max_len_in_list([_|T], CurMax, Result) :- max_len_in_list(T, CurMax, Result), !.
 max_len_in_list(List, Result) :- max_len_in_list(List, 0, Result).
 
-task21 :- see('C:\Prolog\lab14\file.txt'), read_list_str(StrList), seen, max_len_in_list(StrList, MaxLen), write("Максимальная длина строки: "), write(MaxLen), nl.
+task21 :- see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, max_len_in_list(StrList, MaxLen), write("Максимальная длина строки: "), write(MaxLen), nl.
+% 2.2
+count_no_spaces([], Result, Result) :- !.
+count_no_spaces([H|T], CurCnt, Result) :- count_symbols(H, " ", SC), SC = 0, NewCnt is CurCnt + 1, count_no_spaces(T, NewCnt, Result), !.
+count_no_spaces([_|T], CurCnt, Result) :- count_no_spaces(T, CurCnt, Result), !.
+count_no_spaces(Strings, Result) :- count_no_spaces(Strings, 0, Result), !.
+
+task22 :- see('C:/Prolog/lab14/file.txt'), read_list_str(StrList), seen, count_no_spaces(StrList, Cnt), write('Strings with no spaces: '), write(Cnt), nl.
 
 
 
