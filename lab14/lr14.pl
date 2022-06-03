@@ -139,7 +139,11 @@ perms([], Result, Result) :- !.
 perms(List, CurPerm, Result) :- in_list_exclude(List, X, Tail), perms(Tail, [X|CurPerm], Result).
 perms(List, Result) :- perms(List, [], Result).
 perms(List) :- perms(List, P), write("\t"), write(P), nl, fail.
-
+% Размещения по K без повторений
+k_perms(_, 0, Result, Result) :- !.
+k_perms(List, K, CurPerm, Result) :- in_list_exclude(List, X, Tail), K1 is K - 1, k_perms(Tail, K1, [X|CurPerm], Result).
+k_perms(List, K, Result) :- k_perms(List, K, [], Result).
+k_perms(List, K) :- k_perms(List, K, Perm), write("\t"), write(Perm), nl, fail.
 
 
 
