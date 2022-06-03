@@ -107,6 +107,10 @@ get_repeating_words([H|T], PrevWords, CurList, Result) :- in_list(PrevWords, H),
 get_repeating_words([H|T], PrevWords, CurList, Result) :- join(PrevWords, [H], NewWords), get_repeating_words(T, NewWords, CurList, Result), !.
 get_repeating_words(Words, Result) :- get_repeating_words(Words, [], [], Result).
 
+in_list([], _) :- fail.
+in_list([X|_], X).
+in_list([_|T] ,X) :- in_list(T, X).
+
 % Содержится ли в List хотя бы один элемент второго списка
 contains(_, []) :- fail.
 contains(List, [X|_]) :- in_list(List, X), !.
